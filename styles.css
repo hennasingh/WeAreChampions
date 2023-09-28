@@ -71,3 +71,15 @@ ul li {
     margin-bottom: 10px;
     text-align: left;
 }
+
+.from, .to {
+    font-weight: bold;
+}
+
+ul li p {
+    margin-left: 8px;
+}
+
+.from {
+    margin-bottom: 0;
+}

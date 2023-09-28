@@ -10,4 +10,25 @@ btnPublish.addEventListener('click', function() {
     let msgTo = msgToEl.value;
 
     console.log(`To ${msgTo}, ${msg}, From ${from}`);
+    appendMsgToList(msg, from, msgTo);
 })
+
+
+function appendMsgToList(msg, msgFrom, msgTo) {
+    let newEl = document.createElement("li");
+    let newMsgEL = document.createElement("p");
+    let newFrmEl = document.createElement("p");
+    let newToEl = document.createElement("p");
+
+    newToEl.textContent = `To ${msgTo}`;
+    newToEl.className ='to';
+
+    newMsgEL.textContent = msg;
+
+    newFrmEl.textContent = `From ${msgFrom}`;
+    newFrmEl.className = 'from'
+
+    newEl.append(newToEl, newMsgEL, newFrmEl);
+    msgListEL.append(newEl);
+
+}
