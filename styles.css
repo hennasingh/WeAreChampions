@@ -73,7 +73,7 @@ ul li {
 }
 
 .from, .to {
-    font-weight: bold;
+    font-weight: 700;
 }
 
 ul li p {
@@ -82,4 +82,9 @@ ul li p {
 
 .from {
     margin-bottom: 0;
+}
+
+ul li p i {
+    float:right;
+    margin-right: 10px;
 }
