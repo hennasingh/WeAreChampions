@@ -1,0 +1,73 @@
+html, body {
+    margin: 0;
+    padding: 0;
+    background-color: #04131C;
+    text-align: center;
+    font-family: 'Josefin Sans', sans-serif;
+}
+
+h1, h2 {
+    color: #fff;
+}
+
+#msg-text {
+    background-color: #444059;
+    color:#8F8F8F;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    max-width:350px;
+    margin: 30px auto;
+}
+
+img {
+    width:100;
+    margin: 0 auto;
+}
+
+input {
+    background-color: #444059;
+    color:#8F8F8F;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    text-align: center;
+    margin: 0 8px 0 ;
+
+}
+
+.sign-details {
+    display: flex;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+#btn-publish {
+    background-color: #28A9F1 ;
+    border: none;
+    margin: 10px;
+    border-radius: 8px;
+    padding: 22px;
+    color:#04131C;
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+#msg-list {
+    list-style-type: none;
+    padding: 0px;
+}
+
+ul li {
+    background-color: #fff;
+    color: #04131C;
+    padding: 8px;
+    margin-bottom: 10px;
+    text-align: left;
+}
