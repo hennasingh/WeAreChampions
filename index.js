@@ -31,6 +31,20 @@ btnPublish.addEventListener('click', function() {
     clearInputFields();
 })
 
+onValue(endorsementsInDB, function(snapshot) {
+    if(snapshot.exists()) {
+        let msgsArray = Object.entries(snapshot.val())
+        console.log(msgsArray);
+
+        for(let i = 0; i < msgsArray.length; i++){
+            let currentMsg = msgsArray[i]
+            appendMsgToList(currentMsg)
+        }
+    } else {
+        msgListEL.innerHTML = "No Endorsements here yet..."
+    }
+})
+
 function clearInputFields() {
     textAreaEl.value = "";
     msgFromEl.value = "";
@@ -38,24 +52,33 @@ function clearInputFields() {
 }
 
 
-function appendMsgToList(msg, msgFrom, msgTo) {
+function appendMsgToList(currentMsg) {
+
+    let currentMsgId = currentMsg[0];
+    let currentMsgValue = currentMsg[1];
+
     let newEl = document.createElement("li");
     let newMsgEL = document.createElement("p");
     let newFrmEl = document.createElement("p");
     let newToEl = document.createElement("p");
     let newLikeEl = document.createElement("i");
 
-    newToEl.textContent = `To ${msgTo}`;
+    newToEl.textContent = `To ${currentMsgValue.to}`;
     newToEl.className ='to';
 
-    newMsgEL.textContent = msg;
+    newMsgEL.textContent = currentMsgValue.message;
 
-    newFrmEl.textContent = `From ${msgFrom}`;
+    newFrmEl.textContent = `From ${currentMsgValue.msgFrom}`;
     newFrmEl.className = 'from'
 
-    newLikeEl.textContent = ` 0`
+    newLikeEl.textContent = 0
+
     newLikeEl.className = 'fa fa-heart';
     newFrmEl.append(newLikeEl);
+
+    newLikeEl.addEventListener('click', function() {
+        newLikeEl.textContent = Number(newLikeEl.textContent) + 1
+    })
 
     newEl.append(newToEl, newMsgEL, newFrmEl);
     msgListEL.append(newEl);

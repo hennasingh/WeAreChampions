@@ -4,6 +4,7 @@ html, body {
     background-color: #04131C;
     text-align: center;
     font-family: 'Josefin Sans', sans-serif;
+    user-select: none;
 }
 
 h1, h2 {
@@ -87,4 +88,5 @@ ul li p {
 ul li p i {
     float:right;
     margin-right: 10px;
+    letter-spacing: 5px;
 }
