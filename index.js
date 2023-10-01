@@ -1,5 +1,5 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js";
-import { getDatabase, ref, push, onValue, remove } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js"
+import { getDatabase, ref, push, onValue, update } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js"
 
 const appSettings = {
     databaseURL: "https://we-are-champions007-default-rtdb.europe-west1.firebasedatabase.app/"
@@ -24,7 +24,8 @@ btnPublish.addEventListener('click', function() {
     const endorsement = {
         msgFrom: from,
         to: msgTo,
-        message: msg
+        message: msg,
+        likes: 0
     }
     push(endorsementsInDB, endorsement);
 
@@ -34,7 +35,9 @@ btnPublish.addEventListener('click', function() {
 onValue(endorsementsInDB, function(snapshot) {
     if(snapshot.exists()) {
         let msgsArray = Object.entries(snapshot.val())
-        console.log(msgsArray);
+        
+        clearMsgList();
+        msgsArray.reverse()
 
         for(let i = 0; i < msgsArray.length; i++){
             let currentMsg = msgsArray[i]
@@ -49,6 +52,10 @@ function clearInputFields() {
     textAreaEl.value = "";
     msgFromEl.value = "";
     msgToEl.value= "";
+}
+
+function clearMsgList() {
+    msgListEL.innerHTML = ""
 }
 
 
@@ -71,13 +78,17 @@ function appendMsgToList(currentMsg) {
     newFrmEl.textContent = `From ${currentMsgValue.msgFrom}`;
     newFrmEl.className = 'from'
 
-    newLikeEl.textContent = 0
+    newLikeEl.textContent = currentMsgValue.likes
 
     newLikeEl.className = 'fa fa-heart';
     newFrmEl.append(newLikeEl);
 
     newLikeEl.addEventListener('click', function() {
-        newLikeEl.textContent = Number(newLikeEl.textContent) + 1
+        let exactLocationOfMsgInDB = ref(database, `endorsements/${currentMsgId}`)
+        let likeUpdate = {
+            likes: Number(newLikeEl.textContent) + 1
+        }
+        update(exactLocationOfMsgInDB, likeUpdate)
     })
 
     newEl.append(newToEl, newMsgEL, newFrmEl);
