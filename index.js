@@ -78,7 +78,7 @@ function appendMsgToList(currentMsg) {
     newFrmEl.textContent = `From ${currentMsgValue.msgFrom}`;
     newFrmEl.className = 'from'
 
-    newLikeEl.textContent = currentMsgValue.likes
+    newLikeEl.textContent = ' ' + currentMsgValue.likes
 
     newLikeEl.className = 'fa fa-heart';
     newFrmEl.append(newLikeEl);
