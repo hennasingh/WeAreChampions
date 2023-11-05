@@ -5,30 +5,31 @@ const appSettings = {
     databaseURL: "https://we-are-champions007-default-rtdb.europe-west1.firebasedatabase.app/"
 }
 
-const app = initializeApp(appSettings);
-const database = getDatabase(app);
-const endorsementsInDB = ref(database, "endorsements");
+const app = initializeApp(appSettings)
+const database = getDatabase(app)
+const endorsementsInDB = ref(database, "endorsements")
 
-const textAreaEl = document.getElementById("msg-text");
-const msgFromEl = document.getElementById("msg-from");
-const msgToEl = document.getElementById("msg-to");
-const btnPublish = document.getElementById("btn-publish");
+const textAreaEl = document.getElementById("msg-text")
+const msgFromEl = document.getElementById("msg-from")
+const msgToEl = document.getElementById("msg-to")
+const btnPublish = document.getElementById("btn-publish")
 const msgListEL = document.getElementById("msg-list")
 
 btnPublish.addEventListener('click', function() {
-    let msg = textAreaEl.value;
-    let from = msgFromEl.value;
-    let msgTo = msgToEl.value;
+        let msg = textAreaEl.value
+        let from = msgFromEl.value
+        let msgTo = msgToEl.value
 
-    console.log(`To ${msgTo}, ${msg}, From ${from}`);
-    const endorsement = {
-        msgFrom: from,
-        to: msgTo,
-        message: msg,
-        likes: 0
+    if(msg && from && msgTo){
+
+        const endorsement = {
+            msgFrom: from,
+            to: msgTo,
+            message: msg,
+            likes: 0
+     }
+        push(endorsementsInDB, endorsement);
     }
-    push(endorsementsInDB, endorsement);
-
     clearInputFields();
 })
 
@@ -49,39 +50,38 @@ onValue(endorsementsInDB, function(snapshot) {
 })
 
 function clearInputFields() {
-    textAreaEl.value = "";
-    msgFromEl.value = "";
-    msgToEl.value= "";
+    textAreaEl.value = ""
+    msgFromEl.value = ""
+    msgToEl.value= ""
 }
 
 function clearMsgList() {
     msgListEL.innerHTML = ""
 }
 
-
 function appendMsgToList(currentMsg) {
 
-    let currentMsgId = currentMsg[0];
-    let currentMsgValue = currentMsg[1];
+    let currentMsgId = currentMsg[0]
+    let currentMsgValue = currentMsg[1]
 
-    let newEl = document.createElement("li");
-    let newMsgEL = document.createElement("p");
-    let newFrmEl = document.createElement("p");
-    let newToEl = document.createElement("p");
-    let newLikeEl = document.createElement("i");
+    let newEl = document.createElement("li")
+    let newMsgEL = document.createElement("p")
+    let newFrmEl = document.createElement("p")
+    let newToEl = document.createElement("p")
+    let newLikeEl = document.createElement("i")
 
-    newToEl.textContent = `To ${currentMsgValue.to}`;
-    newToEl.className ='to';
+    newToEl.textContent = `To ${currentMsgValue.to}`
+    newToEl.className ='to'
 
-    newMsgEL.textContent = currentMsgValue.message;
+    newMsgEL.textContent = currentMsgValue.message
 
-    newFrmEl.textContent = `From ${currentMsgValue.msgFrom}`;
+    newFrmEl.textContent = `From ${currentMsgValue.msgFrom}`
     newFrmEl.className = 'from'
 
     newLikeEl.textContent = ' ' + currentMsgValue.likes
 
-    newLikeEl.className = 'fa fa-heart';
-    newFrmEl.append(newLikeEl);
+    newLikeEl.className = 'fa fa-heart'
+    newFrmEl.append(newLikeEl)
 
     newLikeEl.addEventListener('click', function() {
         let exactLocationOfMsgInDB = ref(database, `endorsements/${currentMsgId}`)
@@ -91,7 +91,7 @@ function appendMsgToList(currentMsg) {
         update(exactLocationOfMsgInDB, likeUpdate)
     })
 
-    newEl.append(newToEl, newMsgEL, newFrmEl);
-    msgListEL.append(newEl);
+    newEl.append(newToEl, newMsgEL, newFrmEl)
+    msgListEL.append(newEl)
 
 }
